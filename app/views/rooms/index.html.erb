@@ -1,0 +1,36 @@
+<p style="color: green"><%= notice %></p>
+
+<div class= 'row'>
+  <div class='col-3'>
+    <%= render 'form', room: Room.new %>
+    <hr>
+    <div id="rooms">
+      <% @rooms.each do |room| %>
+        <%= link_to room, data: { turbo: false } do %>
+          <div class='card my-3'>
+            <div class='card-body'>
+              <%= render room %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class='col-9'>
+    <% if @room.present? %>
+      <div id='room-id' data-room-id="<%= @room.id %>"><%= @room.id %></div>
+      <div class='chat-room'>
+        <%= @room.name %>
+        <div id='messages'>
+          <% @room.messages.each do |message| %> 
+            <%= render message %>
+          <% end %>
+        </div>
+        <div class='chat-box'>
+          <%= render 'messages/form', message: Message.new, room: @room %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
